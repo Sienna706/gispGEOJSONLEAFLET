@@ -19,11 +19,24 @@
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin=""></script>
 
+
+    <script>
+        var map = L.map('map').setView([27.3172, -82.5773], 13); // Coordinates for St. Armands Circle, FL
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var marker = L.marker([27.3172, -82.5773]).addTo(map)
+            .bindPopup('St. Armands Circle, FL')
+            .openPopup();
+    </script>
+
         <style>
             #map {
                 height: 100vh;
             }
-        </style>
+    </style>
 
 </head>
 
