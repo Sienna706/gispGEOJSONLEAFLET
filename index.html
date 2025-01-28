@@ -38,8 +38,15 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
+        var circle = L.circle([27.3172, -82.5773], {
+            color: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+            radius: 500
+        }).addTo(map);
+
         var marker = L.marker([27.3172, -82.5773]).addTo(map)
-            .bindPopup('St. Armands Circle, FL')
+            .bindPopup('Hurricane Helene made landfall here 01:30 UTC')
             .openPopup();
     </script>
 
