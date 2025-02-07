@@ -8,7 +8,7 @@
 
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
- <title>Hello Leaflet</title>
+ <title>Leaflet Map</title>
 
      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
@@ -32,7 +32,7 @@
 
     <div id="map"></div>
     <script>
-        var map = L.map('map').setView([27.3172, -82.5773], 13); // Coordinates for St. Armands Circle, FL
+        var map = L.map('map').fitWorld(); // Fit the map to show the whole world
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -45,9 +45,29 @@
             radius: 1000
         }).addTo(map);
 
-        var marker = L.marker([27.3172, -82.5773]).addTo(map)
-            .bindPopup('Hurricane Helene made landfall here 01:30 UTC')
-            .openPopup();
+        var marker = L.marker([27.3172, -82.5773]).addTo(map);
+
+        // Load GeoJSON data
+        fetch('map.geojson')
+            .then(response => response.json())
+            .then(data => {
+                L.geoJSON(data, {
+                    onEachFeature: function (feature, layer) {
+                        if (feature.properties) {
+                            var popupContent = "<b>City:</b> " + feature.properties.City + "<br>" +
+                                               "<b>Place:</b> " + feature.properties.Place + "<br>" +
+                                               "<b>Population 1985:</b> " + feature.properties.Pop_1985 + " million<br>" +
+                                               "<b>Population 1990:</b> " + feature.properties.Pop_1990 + " million<br>" +
+                                               "<b>Population 1995:</b> " + feature.properties.Pop_1995 + " million<br>" +
+                                               "<b>Population 2000:</b> " + feature.properties.Pop_2000 + " million<br>" +
+                                               "<b>Population 2005:</b> " + feature.properties.Pop_2005 + " million<br>" +
+                                               "<b>Population 2010:</b> " + feature.properties.Pop_2010 + " million<br>" +
+                                               "<b>Population 2015:</b> " + feature.properties.Pop_2015 + " million";
+                            layer.bindPopup(popupContent);
+                        }
+                    }
+                }).addTo(map);
+            });
     </script>
 
 
